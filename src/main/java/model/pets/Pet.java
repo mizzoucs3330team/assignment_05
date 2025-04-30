@@ -2,6 +2,7 @@ package main.java.model.pets;
 
 public abstract class Pet /* implements Comparable<Pet> */ {
 	// initializers
+	// private int id; // I'm not sure how this works yet.
 	private String name;
 	private int age;
 	private boolean adopted;
