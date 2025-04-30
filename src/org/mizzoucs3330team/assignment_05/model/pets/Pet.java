@@ -7,6 +7,8 @@ public abstract class Pet /* implements Comparable<Pet> */ {
 	private boolean adopted;
 //    Species should probably be implemented via subclasses.
 //    private String species;
+//    public String getSpecies() {return species;}
+//    public void setSpecies(String species) {this.species = species;}
 
 	/**
 	 * Create a Pet.
@@ -41,9 +43,6 @@ public abstract class Pet /* implements Comparable<Pet> */ {
 	public void setName(String name) {
 		this.name = name;
 	}
-//	  See comment above.
-//    public String getSpecies() {return species;}
-//    public void setSpecies(String species) {this.species = species;}
 
 	public boolean getAdopted() {
 		return adopted;
