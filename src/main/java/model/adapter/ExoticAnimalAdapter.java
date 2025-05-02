@@ -4,10 +4,51 @@ import main.java.model.ExoticAnimal;
 import main.java.model.pets.Pet;
 
 public class ExoticAnimalAdapter extends Pet {
-    private ExoticAnimal exoticAnimal;
+    private final ExoticAnimal exoticAnimal;
 
-    public ExoticAnimalAdapter(ExoticAnimal exoticAnimal){
+    /**
+     * Creates adapter for exotic animals
+     * @param exoticAnimal Third-party animal to adapt
+     */
+    public ExoticAnimalAdapter(ExoticAnimal exoticAnimal) {
+        // Convert String ID to int ID
+        super(convertId(exoticAnimal.getUniqueId()),
+              exoticAnimal.getAnimalName(),
+              exoticAnimal.getYearsOld(),
+              false);  // start unadopted
+        
         this.exoticAnimal = exoticAnimal;
-        //map exotic animal properties to animal properties
+    }
+
+    /**
+     * Converts exotic ID format ("exo001") to integer (1)
+     * @param uniqueId Third-party ID string
+     * @return Numeric portion as an int
+     * @throws NumberFormatException for invalid formats
+     */
+    private static int convertId(String uniqueId) {
+        try {
+            return Integer.parseInt(uniqueId.replace("exo", ""));
+        } catch(NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid exotic ID format: " + uniqueId);
+        }
+    }
+
+    /**
+     * Retrieves species combining category and subspecies
+     * @return Formatted species string
+     */
+    @Override
+    public String getSpecies() {
+        return exoticAnimal.getCategory() + ": " + exoticAnimal.getSubSpecies();
+    }
+
+    /**
+     * Provides full exotic animal details
+     * @return Formatted string with all information
+     */
+    @Override
+    public String toString() {
+        return super.toString() + " [Exotic ID: " + exoticAnimal.getUniqueId() + "]";
     }
 }
