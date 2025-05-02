@@ -1,6 +1,7 @@
 package main.java.model.pets;
 
 public abstract class Pet implements Comparable<Pet> {
+	private int id;
 	private String name;
 	private int age;
 	private boolean adopted;
@@ -8,15 +9,37 @@ public abstract class Pet implements Comparable<Pet> {
 	/**
 	 * Create a Pet.
 	 * 
+     * @param id      Unique identifier for the pet.
 	 * @param name    The pet's name.
 	 * @param age     The age of the pet in years.
 	 * @param adopted Set to true if the pet has an owner; otherwise false.
 	 */
-	public Pet(String name, int age, boolean adopted) {
+	public Pet(int id, String name, int age, boolean adopted) {
+		this.id = id;
 		this.name = name;
 		this.age = age;
 		this.adopted = adopted;
 	}
+
+    /**
+     * Retrieves the unique identifier
+     * @return The pet's ID
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Sets the unique identifier
+     * @param id Must be positive or 0
+     * @throws IllegalArgumentException for non-positive IDs
+     */
+    public void setId(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID must be positive");
+        }
+        this.id = id;
+    }
 
 	/**
 	 * Retrieves the pet's age
@@ -85,4 +108,14 @@ public abstract class Pet implements Comparable<Pet> {
      * @return A string representing the pet's species
      */
     public abstract String getSpecies();
+
+    /**
+     * String representation
+     * @return Formatted pet info
+     */
+    @Override
+    public String toString() {
+        return String.format("%s (ID: %d) - %d years old [%s]",
+            name, id, age, adopted ? "Adopted" : "Available");
+    }
 }
