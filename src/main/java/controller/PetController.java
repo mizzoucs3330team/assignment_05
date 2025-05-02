@@ -1,7 +1,6 @@
 package main.java.controller;
 
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
@@ -68,17 +67,6 @@ public class PetController {
             .orElseThrow(() -> new IllegalArgumentException("Pet not found"));
         
         shelter.adoptPet(target);
-    }
-
-    /**
-     * Saves current shelter state to JSON file
-     * @param filePath Destination file path
-     * @throws IOException if file operations fail
-     */
-    public void savePets(String filePath) throws IOException {
-        try (FileWriter writer = new FileWriter(filePath)) {
-            gson.toJson(shelter.getPets(), writer);
-        }
     }
 
     /**
