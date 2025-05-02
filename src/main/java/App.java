@@ -49,8 +49,10 @@ public class App {
 		frame.setSize(400, 300);
 
 		String[] columnNames = { "Name", "Age" };
+		
+		Pet[] pets = petController
 
-		JTable table = new JTable("Pets");
+		JTable table = new JTable(columnNames);
 
 		JButton button = new JButton("Press");
 		frame.getContentPane().add(button); // Adds Button to content pane
