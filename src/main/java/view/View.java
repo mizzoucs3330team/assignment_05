@@ -6,14 +6,13 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class View extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTable table;
 
 	/**
@@ -50,21 +49,40 @@ public class View extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 
-		table = new JTable(new Object[][] {},
-				new String[] { "Pet ID", "Name", "Adopted?", "Age", "Type", "Species", "Actions" });
-
-		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(0).setMinWidth(40);
-		table.getColumnModel().getColumn(0).setMaxWidth(40);
-
-		table.getColumnModel().getColumn(2).setResizable(false);
-		table.getColumnModel().getColumn(2).setMinWidth(60);
-		table.getColumnModel().getColumn(2).setMaxWidth(60);
-
+		String[] colNames = { "Pet ID", "Name", "Type", "Species", "Age", "Adopted?", "Actions" };
+		Object[][] data = {};
+		DefaultTableModel tableModel = new DefaultTableModel(data, colNames);
+		table = new JTable(tableModel);
 		scrollPane.setViewportView(table);
 
-//
-//		JTable table = new JTable(data, columnNames);
+		// Doesn't seem to work.
+//		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+
+		// Pet ID
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(0).setMinWidth(45);
+		table.getColumnModel().getColumn(0).setMaxWidth(45);
+
+		// Name
+		table.getColumnModel().getColumn(1).setMaxWidth(100);
+
+		// Type
+		table.getColumnModel().getColumn(2).setMaxWidth(100);
+
+		// Species
+		table.getColumnModel().getColumn(3).setMaxWidth(100);
+
+		// Age
+		table.getColumnModel().getColumn(4).setResizable(false);
+		table.getColumnModel().getColumn(4).setMinWidth(35);
+		table.getColumnModel().getColumn(4).setMaxWidth(35);
+
+		// Adopted?
+		table.getColumnModel().getColumn(5).setResizable(false);
+		table.getColumnModel().getColumn(5).setMinWidth(60);
+		table.getColumnModel().getColumn(5).setMaxWidth(60);
+
+		tableModel.addRow(new Object[] { 1, "Harold", "Pig", "Pink", 2, "No", "TODO: Delete Btn, etc." });
 
 	}
 }
