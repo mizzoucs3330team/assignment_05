@@ -5,7 +5,7 @@ import main.java.controller.PetController;
 public class App {
     public static void main(String[] args) {
         try {
-            //Initialize controller with dependency injection
+            //Initialize petController
             PetController petController = new PetController();
             
             //Load regular pets
@@ -24,12 +24,13 @@ public class App {
             petController.getShelter().sortPetsByName();
             petController.displayShelterStatus();
 
-            //Adopt Pet 3 then display
+            //Adopt pet 3 then display again
             System.out.println("\nAdopting pet with ID: 3");
 			petController.adoptPet(3);
             petController.displayShelterStatus();
 
             System.out.println("\nEOP\n");
+			
         } catch (Exception e) {
             System.err.println("Critical error: " + e.getMessage());
             e.printStackTrace();
