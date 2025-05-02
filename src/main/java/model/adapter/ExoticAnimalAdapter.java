@@ -49,6 +49,7 @@ public class ExoticAnimalAdapter extends Pet {
      */
     @Override
     public String toString() {
-        return super.toString() + " [Exotic ID: " + exoticAnimal.getUniqueId() + "]";
+        return String.format("%s (Exotic ID: %s) - %d years old",
+            exoticAnimal.getAnimalName(), exoticAnimal.getUniqueId(), exoticAnimal.getYearsOld());
     }
 }

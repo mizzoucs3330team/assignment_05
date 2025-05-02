@@ -115,7 +115,7 @@ public abstract class Pet implements Comparable<Pet> {
      */
     @Override
     public String toString() {
-        return String.format("%s (ID: %d) - %d years old [%s]",
-            name, id, age, adopted ? "Adopted" : "Available");
+        return String.format("%s (ID: %d) - %d years old",
+            name, id, age);
     }
 }

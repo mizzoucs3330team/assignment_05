@@ -1,23 +1,34 @@
 package main.java;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
-
-import com.google.gson.Gson;
-
-import main.java.model.pets.Dog;
-import main.java.model.pets.Pet;
+import main.java.controller.PetController;
 
 public class App {
-	public static void main(String[] args) throws FileNotFoundException {
-		Gson gson = new Gson();
-		Reader reader = new FileReader("./src/main/resources/pets.json");
+    public static void main(String[] args) {
+        try {
+            //Initialize controller with dependency injection
+            PetController petController = new PetController();
+            
+            //Load regular pets
+            petController.loadPets("./src/main/resources/pets.json");
+            System.out.println("LOADED PETS SUCCESSFULLY");
+            
+            //Load exotic animals
+            petController.loadPets("./src/main/resources/exotic_animals.json");
+            System.out.println("LOADED EXOTICS SUCCESSFULLY\n");
 
-		// This is assuming one Pet in the file--there are 3. So it's wrong.
-		Pet pet = gson.fromJson(reader, Pet.class);
+            //Display initial status
+            petController.displayShelterStatus();
+            
+            //Sort and display
+            System.out.println("\nSorted by Name:");
+            petController.getShelter().sortPetsByName();
+            petController.displayShelterStatus();
 
-		Dog dog = new Dog("Bolt", 1, false);
-
-	}
+            System.out.println("\nEOP\n");
+        } catch (Exception e) {
+            System.err.println("Critical error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
 }
