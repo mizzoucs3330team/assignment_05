@@ -1,15 +1,9 @@
 package main.java.model.pets;
 
-public abstract class Pet /* implements Comparable<Pet> */ {
-	// initializers
-	// private int id; // I'm not sure how this works yet.
+public abstract class Pet implements Comparable<Pet> {
 	private String name;
 	private int age;
 	private boolean adopted;
-//    Species should probably be implemented via subclasses.
-//    private String species;
-//    public String getSpecies() {return species;}
-//    public void setSpecies(String species) {this.species = species;}
 
 	/**
 	 * Create a Pet.
@@ -24,38 +18,71 @@ public abstract class Pet /* implements Comparable<Pet> */ {
 		this.adopted = adopted;
 	}
 
-	/*
-	 * Evan, these all need JavaDoc comments. One comment for all of them will mean
-	 * deducted points for us.
+	/**
+	 * Retrieves the pet's age
+	 * @return The age of the pet in years
 	 */
-	// getters/setters
-	public int getAge() {
-		return age;
-	}
+	public int getAge() {return age;}
 
+	/**
+	 * Sets the pet's age
+	 * @param age The age of the pet in years (must be non-negative)
+     * @throws IllegalArgumentException if age is negative
+	 */
 	public void setAge(int age) {
+        if (age < 0) {
+            throw new IllegalArgumentException("Age cannot be negative.");
+        }
 		this.age = age;
 	}
 
-	public String getName() {
-		return name;
-	}
+	/**
+	 * Retrieves the pet's name
+	 * @return The name of the pet
+	 */
+	public String getName() {return name;}
 
+	/**
+	 * Sets the pet's name
+	 * @param name The name to assign to the pet (cannot be null or blank)
+	 */
 	public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be null or blank.");
+        }
 		this.name = name;
 	}
 
-	public boolean getAdopted() {
-		return adopted;
+	/**
+	 * Retrieves adoption status
+	 * @return true if the pet has been adopted, false otherwise
+	 */
+	public boolean getAdopted() {return adopted;}
+
+	/**
+	 * Sets adoption status
+	 * @param adopted The adoption status to set (true = adopted, false = available)
+	 */
+	public void setAdopted(boolean adopted) {this.adopted = adopted;}
+
+
+    /**
+     * Compares this pet to another by name
+     * 
+     * @param other The pet to compare against
+     * @return Negative if this pet's name comes first alphabetically,
+     *         positive if after, or 0 if names are equal
+     */
+	@Override
+	public int compareTo(Pet n){
+		return this.name.compareTo(n.name);
 	}
 
-	public void setAdopted(boolean adopted) {
-		this.adopted = adopted;
-	}
-
-	// comparables
-	// @Override
-	// public int compareTo(Pet n){
-	// return this.name.compareTo(n.name);
-	// }
+	
+    /**
+     * Retrieves the specific species classification of the pet.
+     * 
+     * @return A string representing the pet's species
+     */
+    public abstract String getSpecies();
 }
