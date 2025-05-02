@@ -24,6 +24,11 @@ public class App {
             petController.getShelter().sortPetsByName();
             petController.displayShelterStatus();
 
+            //Adopt Pet 3 then display
+            System.out.println("\nAdopting pet with ID: 3");
+			petController.adoptPet(3);
+            petController.displayShelterStatus();
+
             System.out.println("\nEOP\n");
         } catch (Exception e) {
             System.err.println("Critical error: " + e.getMessage());
