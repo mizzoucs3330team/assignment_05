@@ -1,9 +1,5 @@
 package main.java;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTable;
-
 import main.java.controller.PetController;
 
 public class App {
@@ -40,24 +36,6 @@ public class App {
 			e.printStackTrace();
 			System.exit(1);
 		}
-
-		// ======================================================================
-		// GUI stuff
-		// Maybe move this into its own class.
-		JFrame frame = new JFrame("Pet Center Administrative Interface");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(400, 300);
-
-		String[] columnNames = { "Name", "Age" };
-		
-		Pet[] pets = petController
-
-		JTable table = new JTable(columnNames);
-
-		JButton button = new JButton("Press");
-		frame.getContentPane().add(button); // Adds Button to content pane
-
-		frame.setVisible(true);
 
 	}
 
