@@ -2,6 +2,7 @@ package main.java;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JTable;
 
 import main.java.controller.PetController;
 
@@ -40,11 +41,16 @@ public class App {
 			System.exit(1);
 		}
 
+		// ======================================================================
 		// GUI stuff
 		// Maybe move this into its own class.
-		JFrame frame = new JFrame("My First GUI");
+		JFrame frame = new JFrame("Pet Center Administrative Interface");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(300, 300);
+		frame.setSize(400, 300);
+
+		String[] columnNames = { "Name", "Age" };
+
+		JTable table = new JTable("Pets");
 
 		JButton button = new JButton("Press");
 		frame.getContentPane().add(button); // Adds Button to content pane
