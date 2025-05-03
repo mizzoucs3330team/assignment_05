@@ -1,11 +1,17 @@
+/*
+ * WARNING: DO NOT USE THE DESIGN TAB. IT IS TOO EASY TO BREAK THINGS.
+ */
+
 package main.java.view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -58,35 +64,13 @@ public class View extends JFrame {
 		table = new JTable(tableModel);
 		scrollPane.setViewportView(table);
 
-		// Doesn't seem to work.
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-
-		// Pet ID
-		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(0).setMinWidth(45);
-		table.getColumnModel().getColumn(0).setMaxWidth(45);
-
-		// Name
-		table.getColumnModel().getColumn(1).setMaxWidth(100);
-
-		// Type
-		table.getColumnModel().getColumn(2).setMaxWidth(100);
-
-		// Species
-		table.getColumnModel().getColumn(3).setMaxWidth(100);
-
-		// Age
-		table.getColumnModel().getColumn(4).setResizable(false);
-		table.getColumnModel().getColumn(4).setMinWidth(35);
-		table.getColumnModel().getColumn(4).setMaxWidth(35);
-
-		// Adopted?
-		table.getColumnModel().getColumn(5).setResizable(false);
-		table.getColumnModel().getColumn(5).setMinWidth(60);
-		table.getColumnModel().getColumn(5).setMaxWidth(60);
-
 		tableModel.addRow(new Object[] { 1, "Harold", "Pig", "Pink", 2, "No", "TODO: Delete Btn, etc." });
 
+		// Southern Buttons
+		JPanel btnPanel = new JPanel();
+		btnPanel.add(new JButton("Add Pet"));
+		btnPanel.add(new JButton("Save All"));
+		getContentPane().add(btnPanel, BorderLayout.SOUTH);
 	}
 
 	/**
