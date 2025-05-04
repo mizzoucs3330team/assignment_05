@@ -5,46 +5,25 @@
 package main.java.view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.google.gson.JsonParseException;
-
+import main.java.controller.PetController;
 import main.java.model.pets.Pet;
-import main.java.controller.*;
 
 public class View extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	DefaultTableModel tableModel;
-	private static PetController petController;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					View frame = new View(petController);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private PetController petController;
 
 	/**
 	 * Create the frame.
