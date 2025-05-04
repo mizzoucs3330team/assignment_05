@@ -28,7 +28,7 @@ public class View extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	DefaultTableModel tableModel;
-	private PetController petController;
+	private static PetController petController;
 
 	/**
 	 * Launch the application.
@@ -37,7 +37,7 @@ public class View extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					View frame = new View();
+					View frame = new View(petController);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +49,7 @@ public class View extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public View() {
+	public View(PetController petController) {
 		setTitle("Pet Center Administrative Panel");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(573, 426);
@@ -101,20 +101,9 @@ public class View extends JFrame {
 		btnPanel.add(btnSortBySpecies);
 		getContentPane().add(btnPanel, BorderLayout.SOUTH);
 
-		//create petController instance here and load pets
-		this.petController = new PetController();
-		try {
-			petController.loadPets("./src/main/resources/pets.json");
-			petController.loadPets("./src/main/resources/exotic_animals.json");
-			System.out.println("LOADED ALL PETS SUCCESSFULLY");
-			refreshPetTable();
-		} catch (IOException | JsonParseException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(this,
-				"Error loading pets: " + e.getMessage(),
-				"File Error",
-				JOptionPane.ERROR_MESSAGE);
-			}
+		//instantiate petController instance here and load pets
+		this.petController = petController;
+		refreshPetTable();
 
 	}
 	/**

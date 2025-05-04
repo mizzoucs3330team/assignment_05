@@ -1,42 +1,42 @@
 package main.java;
 
+import java.awt.EventQueue;
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
+import com.google.gson.JsonParseException;
+
 import main.java.controller.PetController;
+import main.java.view.View;
 
 public class App {
 	public static void main(String[] args) {
-		try {
-			// Initialize petController
-			PetController petController = new PetController();
-
-			// Load regular pets
-			petController.loadPets("./src/main/resources/pets.json");
-			System.out.println("LOADED PETS SUCCESSFULLY");
-
-			// Load exotic animals
-			petController.loadPets("./src/main/resources/exotic_animals.json");
-			System.out.println("LOADED EXOTICS SUCCESSFULLY\n");
-
-			// Display initial status
-			petController.displayShelterStatus();
-
-			// Sort and display
-			System.out.println("\nSorted by Name:");
-			petController.getShelter().sortPetsByName();
-			petController.displayShelterStatus();
-
-			// Adopt pet 3 then display again
-			System.out.println("\nAdopting pet with ID: 3");
-			petController.adoptPet(3);
-			petController.displayShelterStatus();
-
-			System.out.println("\nEOP\n");
-
-		} catch (Exception e) {
-			System.err.println("Critical error: " + e.getMessage());
-			e.printStackTrace();
-			System.exit(1);
-		}
-
+    EventQueue.invokeLater(() -> {
+        try {
+			//create petController
+            PetController petController = new PetController();
+            try {
+				//load pets
+                petController.loadPets("./src/main/resources/pets.json");
+                petController.loadPets("./src/main/resources/exotic_animals.json");
+                System.out.println("LOADED ALL PETS SUCCESSFULLY");
+            } catch (IOException | JsonParseException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null,
+                    "Error loading pets: " + e.getMessage(),
+                    "File Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+			//create frame
+			//pass petController variable to assign petController to View
+            View frame = new View(petController);
+			
+            frame.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    });
 	}
 
 }
