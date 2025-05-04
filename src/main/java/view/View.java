@@ -7,22 +7,28 @@ package main.java.view;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.google.gson.JsonParseException;
+
 import main.java.model.pets.Pet;
+import main.java.controller.*;
 
 public class View extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	DefaultTableModel tableModel;
+	private PetController petController;
 
 	/**
 	 * Launch the application.
@@ -64,15 +70,62 @@ public class View extends JFrame {
 		table = new JTable(tableModel);
 		scrollPane.setViewportView(table);
 
-		tableModel.addRow(new Object[] { 1, "Harold", "Pig", "Pink", 2, "No", "TODO: Delete Btn, etc." });
+		//dummy row
+		//tableModel.addRow(new Object[] { 1, "Harold", "Pig", "Pink", 2, "No", "TODO: Delete Btn, etc." });
 
 		// Southern Buttons
 		JPanel btnPanel = new JPanel();
 		btnPanel.add(new JButton("Add Pet"));
 		btnPanel.add(new JButton("Save All"));
-		getContentPane().add(btnPanel, BorderLayout.SOUTH);
-	}
 
+		//Sort Buttons
+		//currently have: Name, Age, and ID
+		JButton btnSortByAge = new JButton("Sort by Age");
+		btnSortByAge.addActionListener(e -> {
+			petController.getShelter().sortPetsByAge();
+			refreshPetTable();
+		});
+		btnPanel.add(btnSortByAge);
+		
+		JButton btnSortByID = new JButton("Sort by ID");
+		btnSortByID.addActionListener(e -> {
+			petController.getShelter().sortPetsById();
+			refreshPetTable();
+		});
+		btnPanel.add(btnSortByID);
+		JButton btnSortBySpecies = new JButton("Sort by Species");
+		btnSortBySpecies.addActionListener(e -> {
+			petController.getShelter().sortPetsBySpecies();
+			refreshPetTable();
+		});
+		btnPanel.add(btnSortBySpecies);
+		getContentPane().add(btnPanel, BorderLayout.SOUTH);
+
+		//create petController instance here and load pets
+		this.petController = new PetController();
+		try {
+			petController.loadPets("./src/main/resources/pets.json");
+			petController.loadPets("./src/main/resources/exotic_animals.json");
+			System.out.println("LOADED ALL PETS SUCCESSFULLY");
+			refreshPetTable();
+		} catch (IOException | JsonParseException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this,
+				"Error loading pets: " + e.getMessage(),
+				"File Error",
+				JOptionPane.ERROR_MESSAGE);
+			}
+
+	}
+	/**
+	 * Fetch all pets from the controller and call setPets method to update the table
+	 * 
+	 */
+	private void refreshPetTable() {
+		java.util.List<Pet> pets = petController.getShelter().getPets();
+		setPets(pets.toArray(new Pet[0]));
+	}
+	
 	/**
 	 * Set the pets that are displayed inside the table.
 	 * 
@@ -85,14 +138,19 @@ public class View extends JFrame {
 		}
 
 		for (Pet pet : pets) {
-			String typeString = "Unknown";
-			String speciesString = "Unknown";
 
-			// TODO: Implement an if/else for type checking. This could be implemented as a
-			// static method of Pet.
-
-			tableModel.addRow(new Object[] { pet.getId(), pet.getName(), typeString, speciesString, pet.getAge(),
-					pet.getAdopted() ? "Yes" : "No", "TODO: Delete Btn, other actions etc." });
+			String typeString = pet.getClass().getSimpleName();
+			String speciesString = pet.getSpecies();
+		
+			tableModel.addRow(new Object[] {
+				pet.getId(),
+				pet.getName(),
+				typeString,
+				speciesString,
+				pet.getAge(),
+				pet.getAdopted() ? "Yes" : "No",
+				"TODO: Delete Btn, other actions etc."
+			});
 		}
 
 	}

@@ -52,6 +52,13 @@ public class Shelter<T extends Pet> {
     /**
      * Sorts pets by age (ascending)
      */
+    public void sortPetsById() {
+        pets.sort(Comparator.comparingInt(Pet::getId));
+    }
+
+    /**
+     * Sorts pets by age (ascending)
+     */
     public void sortPetsByAge() {
         pets.sort(Comparator.comparingInt(Pet::getAge));
     }
