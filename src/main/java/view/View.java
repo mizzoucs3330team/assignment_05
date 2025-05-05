@@ -7,6 +7,7 @@ package main.java.view;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
+import java.io.IOException;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
@@ -16,12 +17,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import main.java.controller.PetController;
+import main.java.model.pets.Cat;
+import main.java.model.pets.Dog;
 import main.java.model.pets.Pet;
+import main.java.model.pets.Rabbit;
 
 public class View extends JFrame {
 
@@ -62,8 +67,20 @@ public class View extends JFrame {
 
 		// Southern Buttons
 		JPanel btnPanel = new JPanel();
-		btnPanel.add(new JButton("Add Pet"));
-		btnPanel.add(new JButton("Save All"));
+		JButton btnAddPet = new JButton("Add Pet");
+		btnAddPet.addActionListener(e -> showAddPetDialog());
+		btnPanel.add(btnAddPet);
+
+		JButton btnSaveAll = new JButton("Save All");
+		btnSaveAll.addActionListener(e -> {
+			try {
+				petController.savePetsToFile("./src/main/resources/pets.json");
+				JOptionPane.showMessageDialog(this, "All pets saved successfully!");
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(this, "Error saving pets: " + ex.getMessage());
+			}
+		});
+		btnPanel.add(btnSaveAll);
 
 		//Sort Buttons
 		//currently have: Name, Age, and ID
@@ -130,7 +147,190 @@ public class View extends JFrame {
 		}
 
 	}
-	
+	private void showAddPetDialog() {
+
+ 
+
+		//create fields
+ 
+
+		JTextField nameField = new JTextField();
+ 
+
+		JTextField typeField = new JTextField();
+ 
+
+		JTextField speciesField = new JTextField();
+ 
+
+		JTextField ageField = new JTextField();
+ 
+
+
+ 
+
+		//create messages and assign fields
+ 
+
+		Object[] message = {
+ 
+
+			"Name:", nameField,
+ 
+
+			"Type:", typeField,
+ 
+
+			"Species:", speciesField,
+ 
+
+			"Age:", ageField
+ 
+
+		};
+ 
+
+
+ 
+
+		//options/messages
+ 
+
+		int option = JOptionPane.showConfirmDialog(
+ 
+
+			View.this, message, "Add New Pet", JOptionPane.OK_CANCEL_OPTION);
+ 
+
+
+ 
+
+		if (option == JOptionPane.OK_OPTION) {
+ 
+
+			try {
+ 
+
+				String name = nameField.getText().trim();
+ 
+
+				String type = typeField.getText().trim();
+ 
+
+				String species = speciesField.getText().trim();
+ 
+
+				int age = Integer.parseInt(ageField.getText().trim());
+ 
+
+
+ 
+
+				// Generate a new unique ID (simple approach: max existing ID + 1)
+ 
+
+				int newId = petController.getShelter().getPets().stream()
+ 
+
+					.mapToInt(Pet::getId)
+ 
+
+					.max().orElse(0) + 1;
+ 
+
+
+ 
+
+				// Create a new Pet (you may have subclasses for Dog, Cat, etc.)
+ 
+
+				Pet newPet;
+ 
+
+							
+ 
+
+				switch (type.toLowerCase()) {
+ 
+
+					case "dog":
+ 
+
+					//(int id, String name, int age, boolean adopted, String breed)
+ 
+
+						newPet = new Dog(newId, name, age, false, species);
+ 
+
+						break;
+ 
+
+					case "cat":
+ 
+
+						newPet = new Cat(newId, name, age, false, species);
+ 
+
+						break;
+ 
+
+					case "rabbit":
+ 
+
+						newPet = new Rabbit(newId, name, age, false, species);
+ 
+
+						break;
+ 
+
+					default:
+ 
+
+						throw new IllegalArgumentException("Unknown pet type: " + type);
+ 
+
+				}
+ 
+
+
+ 
+
+				petController.getShelter().addPet(newPet);
+ 
+
+				refreshPetTable();
+ 
+
+				JOptionPane.showMessageDialog(View.this, "Pet added successfully!");
+ 
+
+
+ 
+
+			} catch (NumberFormatException nfe) {
+ 
+
+				JOptionPane.showMessageDialog(View.this, "Invalid age. Please enter a number.");
+ 
+
+			} catch (Exception ex) {
+ 
+
+				JOptionPane.showMessageDialog(View.this, "Error adding pet: " + ex.getMessage());
+ 
+
+			}
+ 
+
+		}
+ 
+
+		
+ 
+
+	}
+ 
+
 	/**
 	 * Table cell renderer and editor for the "Adopt" button in the Actions column.
 	 * Displays an Adopt button for each pet, enabling marking pets as adopted.

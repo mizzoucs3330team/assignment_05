@@ -1,33 +1,29 @@
 [
   {
+    "breed": "Golden Retriever",
     "id": 1,
     "name": "Buddy",
-    "type": "Dog",
-    "species": "Golden Retriever",
     "age": 3,
     "adopted": false
   },
   {
+    "breed": "Siamese",
     "id": 2,
     "name": "Whiskers",
-    "type": "Cat",
-    "species": "Siamese",
     "age": 2,
     "adopted": false
   },
   {
+    "breed": "Dutch",
     "id": 3,
     "name": "Thumper",
-    "type": "Rabbit",
-    "species": "Dutch",
     "age": 1,
     "adopted": false
   },
   {
+    "breed": "German Shepherd",
     "id": 4,
     "name": "Shadow",
-    "type": "Dog",
-    "species": "German Shepherd",
     "age": 5,
     "adopted": false
   }

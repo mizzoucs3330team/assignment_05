@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
@@ -92,5 +93,14 @@ public class PetController {
 	 */
 	public Shelter<Pet> getShelter() {
 		return this.shelter;
+	}
+	
+	public void savePetsToFile(String filepath) throws IOException{
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		List<Pet> pets = this.getShelter().getPets();
+
+		try (FileWriter writer = new FileWriter(filepath)) {
+        	gson.toJson(pets, writer);
+    	}
 	}
 }
