@@ -69,6 +69,12 @@ public class Shelter<T extends Pet> {
     public void sortPetsBySpecies() {
         pets.sort(Comparator.comparing(Pet::getSpecies));
     }
+    /**
+     * Sorts pets by adoption status
+     */
+    public void sortPetsByAdoptable() {
+        pets.sort(Comparator.comparing(Pet::getAdopted));
+    }
 
     /**
      * Marks pet as adopted
