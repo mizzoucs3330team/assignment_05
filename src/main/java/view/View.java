@@ -153,12 +153,20 @@ public class View extends JFrame {
 						.orElse(null);
 				if (pet != null && !pet.getAdopted()) {
 					pet.setAdopted(true);
+					// Show popup with adopted pet's name
+					JOptionPane.showMessageDialog(
+						View.this,
+						"You adopted " + pet.getName() + "!",
+						"Pet Adopted",
+						JOptionPane.INFORMATION_MESSAGE
+					);
 					refreshPetTable();
 				} else if (pet != null) {
 					JOptionPane.showMessageDialog(View.this, pet.getName() + " is already adopted.");
 				}
 			});
 		}
+		
 		/**
 		 * Returns the component used for drawing the cell in the table.
 		 * This method configures the "Adopt" button to be enabled only if the pet is not adopted.
